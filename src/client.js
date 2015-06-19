@@ -2295,6 +2295,15 @@ PlugAPI.prototype.moderateSetRole = function(uid, role, callback) {
     return true;
 };
 
+
+PlugAPI.prototype.getPopulation = function() {
+    return room.getRoomMeta().population;
+}
+
+PlugAPI.prototype.getGuests = function() {
+    return room.getRoomMeta().guests;
+}
+
 //noinspection JSUnusedGlobalSymbols
 /**
  * Unban a user

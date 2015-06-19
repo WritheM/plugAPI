@@ -28,6 +28,7 @@ var User = function(data) {
     this.username = data.username ? data.username : '';
     this.vote = votes[data.id] !== undefined ? votes[data.id] === -1 ? -1 : 1 : 0;
     this.xp = data.xp ? data.xp : 0;
+    this.guest = data.guest ? data.guest : false;
 };
 
 User.prototype.toString = function() {
@@ -316,6 +317,7 @@ Room.prototype.reset = function() {
         id: -1,
         name: '',
         population: 0,
+        guests: 0,
         slug: '',
         welcome: ''
     };
@@ -347,9 +349,16 @@ Room.prototype.addUser = function(user) {
     // Don't add yourself
     if (user.id === mySelf.id) return;
 
+    // Handle guests
+    if (user.guest == true) {
+        meta.guests ++;
+        return;
+    }
+
     // Only add if the user doesn't exist
     if (this.getUser(user.id) === null) users.push(user);
 
+    meta.population ++;
     // Remove user from cache
     delete cacheUsers[booth.currentDJ];
 };
@@ -359,11 +368,21 @@ Room.prototype.addUser = function(user) {
  * @param {Number} uid UserID
  */
 Room.prototype.removeUser = function(uid) {
+    // Don't remove yourself
+    if (user.id === mySelf.id) return;
+
+    // User is guest
+    if (uid == 0) {
+	meta.guests --;
+        return;
+    }
+
     for (var i in users) {
         if (!users.hasOwnProperty(i)) continue;
         if (users[i].id == uid) {
             // User found
             cacheUsers[uid] = users.splice(i, 1);
+            meta.population --;
             return;
         }
     }
