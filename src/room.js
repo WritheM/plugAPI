@@ -369,11 +369,11 @@ Room.prototype.addUser = function(user) {
  */
 Room.prototype.removeUser = function(uid) {
     // Don't remove yourself
-    if (user.id === mySelf.id) return;
+    if (uid === mySelf.id) return;
 
     // User is guest
     if (uid == 0) {
-	meta.guests --;
+        meta.guests --;
         return;
     }
 

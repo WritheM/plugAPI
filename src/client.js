@@ -2295,11 +2295,19 @@ PlugAPI.prototype.moderateSetRole = function(uid, role, callback) {
     return true;
 };
 
-
+//noinspection JSUnusedGlobalSymbols
+/**
+ * Gets number of users in room
+ */
 PlugAPI.prototype.getPopulation = function() {
     return room.getRoomMeta().population;
 }
 
+
+//noinspection JSUnusedGlobalSymbols
+/**
+ * Gets number of guests in room
+ */
 PlugAPI.prototype.getGuests = function() {
     return room.getRoomMeta().guests;
 }
