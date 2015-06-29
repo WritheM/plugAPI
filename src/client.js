@@ -539,12 +539,17 @@ function receivedChatMessage(messageData) {
         }
 
         // Arguments
-        messageData.args = messageData.args.split(' ');
-        for (i in messageData.args) {
-            if (!messageData.args.hasOwnProperty(i)) continue;
-            if (!isNaN(messageData.args[i])) messageData.args[i] = ~~messageData.args[i];
+        if (messageData.args === '') {
+          messageData.args = [];
         }
-
+        else {
+          messageData.args = messageData.args.split(' ');
+          for (i in messageData.args) {
+             if (!messageData.args.hasOwnProperty(i)) continue;
+              if (!isNaN(messageData.args[i])) messageData.args[i] = ~~messageData.args[i];
+          }
+        }
+        
         // Mention placeholder => User object
         for (i in messageData.mentions) {
             if (messageData.mentions.hasOwnProperty(i)) {
